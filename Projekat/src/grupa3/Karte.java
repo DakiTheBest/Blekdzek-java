@@ -28,10 +28,13 @@ public class Karte {
         }
     }
 
-    public void ashovFix(boolean ashov, int x, int rez) {
+    public int ashovFix(boolean ashov, int x, int rez) {
         if (ashov && x == 0) {
-                this.rez = rez - 10;
-                this.x = 1;
+            x = x + 1;
+            int g = rez - 10;
+            return g;
+        } else {
+            return rez;  
         }
     }
 }

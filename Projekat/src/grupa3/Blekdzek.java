@@ -46,7 +46,7 @@ public class Blekdzek {
 						brojKarata += 1;
 
 						if (igracRez > 21) {
-							Karte.ashovFix(ashov1, x, igracRez);
+							igracRez = Karte.ashovFix(ashov1, x, igracRez);
 						}
 
 			            System.out.println("Izvukli ste " + novaKarta + " (Ukupna vrijednost: " + igracRez + ").");
@@ -76,7 +76,7 @@ public class Blekdzek {
 						dilerRez += vrijednostKarte;
 
 						if (dilerRez > 21) {
-							Karte.ashovFix(ashov2, y, dilerRez);
+							dilerRez = Karte.ashovFix(ashov2, y, dilerRez);
 						}
 
 						System.out.println("Diler vuce " + novaKarta + " (Ukupna vrijednost: " + dilerRez + ")");

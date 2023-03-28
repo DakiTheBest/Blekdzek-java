@@ -8,7 +8,8 @@ public class Blekdzek {
 			Karte Karte = new Karte();
 
 			System.out.println("Grupa 3 - Blekdzek");
-			System.out.println("Igra je nerijesena ako su oba igraca pukla ili su vrijednosti njihovih spilova jednake.\n A - As, ZH - Zandar, Q - Kraljica, KR - Kralj\n P - Pik, T - Tref, H - Herc, K - Karo"); // \n novi red
+			System.out.println("Asov moze biti vrijedan 1 ili 11; vrijednost asova se ne mijenja nakon izvlacenja.\n A - As, J - Zandar, Q - Kraljica, KR - Kralj.\n P - Pik, T - Tref, H - Herc, K - Karo."); // \n novi red
+            Thread.sleep(2000);
 
 			// Loop igre
 			while (true) {
@@ -21,12 +22,11 @@ public class Blekdzek {
 				String dilerKarta2 = Karte.nasumicnaKarta(Karte.broj, Karte.vrsta);
 				int igracRez0 = 0;
 				int dilerRez0 = 0;
-				boolean ashov1 = false; // Bitan za odredjivanje da li je asov 1 ili 11
-				boolean ashov2 = false; // Za dilera
-				int x = 0; // takodje za asova
-				int y = 0; // ^^^^^^^^^^^^^^^^
-			    int igracRez = Karte.nabaviVrijednost(igracKarta1, igracRez0, ashov1) + Karte.nabaviVrijednost(igracKarta2, igracRez0, ashov1);
-			    int dilerRez = Karte.nabaviVrijednost(dilerKarta1, dilerRez0, ashov2) + Karte.nabaviVrijednost(dilerKarta2, dilerRez0, ashov2);
+			    int igracRez1 = Karte.nabaviVrijednost(igracKarta1, igracRez0);
+				int dilerRez1 = Karte.nabaviVrijednost(dilerKarta1, dilerRez0);
+				int igracRez = igracRez1 + Karte.nabaviVrijednost(igracKarta2, igracRez1);
+				int dilerRez = dilerRez1 + Karte.nabaviVrijednost(dilerKarta2, dilerRez1);
+
 
 			    System.out.println("Vase karte: " + igracKarta1 + ", " + igracKarta2 + " (Vrijednost: " + igracRez + ")");
 			    System.out.println("Karta dilera: " + dilerKarta1 + " [?]\n");
@@ -41,13 +41,9 @@ public class Blekdzek {
 
 			        if (input.equals("v")) {
 			            String novaKarta = Karte.nasumicnaKarta(Karte.broj, Karte.vrsta);
-			            int vrijednostKarte = Karte.nabaviVrijednost(novaKarta, igracRez, ashov1);
+			            int vrijednostKarte = Karte.nabaviVrijednost(novaKarta, igracRez);
 			            igracRez += vrijednostKarte;
 						brojKarata += 1;
-
-						if (igracRez > 21) {
-							igracRez = Karte.ashovFix(ashov1, x, igracRez);
-						}
 
 			            System.out.println("Izvukli ste " + novaKarta + " (Ukupna vrijednost: " + igracRez + ").");
 
@@ -72,12 +68,8 @@ public class Blekdzek {
 					for (int i = 2; i < brojKarata; i++) {
 						Thread.sleep(1500); // Čeka 1.5s kako bi simuliralo pravo vađenje karata
 						String novaKarta = Karte.nasumicnaKarta(Karte.broj, Karte.vrsta);
-						int vrijednostKarte = Karte.nabaviVrijednost(novaKarta, dilerRez, ashov2);
+						int vrijednostKarte = Karte.nabaviVrijednost(novaKarta, dilerRez);
 						dilerRez += vrijednostKarte;
-
-						if (dilerRez > 21) {
-							dilerRez = Karte.ashovFix(ashov2, y, dilerRez);
-						}
 
 						System.out.println("Diler vuce " + novaKarta + " (Ukupna vrijednost: " + dilerRez + ")");
 

@@ -5,8 +5,7 @@ import java.util.*;
 public class Blekdzek {
 	public static void main(String[] args) throws InterruptedException { // throws dio zbog thread.sleep funkcije u kodu
 	    try (Scanner scanner = new Scanner(System.in)) { // try kako nebi davalo error (nepotrebno)
-			String[] karta = {"2", "3", "4", "5", "6", "7", "8", "9", "10", "A", "ZH", "Q", "KR"}; // A - Aš, Ž - Žandar, Q - Kraljica, K - Kralj
-			String[] vrsta = {"P", "T", "H", "K"}; // Pik, Tref, Herc, Karo
+			Karte Karte = new Karte();
 
 			System.out.println("Grupa 3 - Blekdzek");
 			System.out.println("Igra je nerijesena ako su oba igraca pukla ili su vrijednosti njihovih spilova jednake.\n A - As, ZH - Zandar, Q - Kraljica, KR - Kralj\n P - Pik, T - Tref, H - Herc, K - Karo"); // \n novi red
@@ -16,29 +15,39 @@ public class Blekdzek {
 			    System.out.println("\nKreiranje nove partije..."); // \n pravi novi red zbog vise mogućih partija
 
 			    // Prve karte
-			    String igracKarta1 = nasumicnaKarta(karta, vrsta);
-			    String dilerKarta1 = nasumicnaKarta(karta, vrsta);
-			    String igracKarta2 = nasumicnaKarta(karta, vrsta);
-				String dilerKarta2 = nasumicnaKarta(karta, vrsta);
-			    int igracRez = nabaviVrijednost(igracKarta1) + nabaviVrijednost(igracKarta2);
-			    int dilerRez = nabaviVrijednost(dilerKarta1) + nabaviVrijednost(dilerKarta2);
+			    String igracKarta1 = Karte.nasumicnaKarta(Karte.broj, Karte.vrsta);
+			    String dilerKarta1 = Karte.nasumicnaKarta(Karte.broj, Karte.vrsta);
+			    String igracKarta2 = Karte.nasumicnaKarta(Karte.broj, Karte.vrsta);
+				String dilerKarta2 = Karte.nasumicnaKarta(Karte.broj, Karte.vrsta);
+				int igracRez0 = 0;
+				int dilerRez0 = 0;
+				boolean ashov1 = false; // Bitan za odredjivanje da li je asov 1 ili 11
+				boolean ashov2 = false; // Za dilera
+				int x = 0; // takodje za asova
+				int y = 0; // ^^^^^^^^^^^^^^^^
+			    int igracRez = Karte.nabaviVrijednost(igracKarta1, igracRez0, ashov1) + Karte.nabaviVrijednost(igracKarta2, igracRez0, ashov1);
+			    int dilerRez = Karte.nabaviVrijednost(dilerKarta1, dilerRez0, ashov2) + Karte.nabaviVrijednost(dilerKarta2, dilerRez0, ashov2);
 
 			    System.out.println("Vase karte: " + igracKarta1 + ", " + igracKarta2 + " (Vrijednost: " + igracRez + ")");
-			    System.out.println("Karta dilera: " + dilerKarta1 + " [?]");
+			    System.out.println("Karta dilera: " + dilerKarta1 + " [?]\n");
 				int pukao = 0; // Određuje je li igrač pukao, bitno za određivanje pobjednika
 				int brojKarata = 2; // Prati broj karata kako bi diler vadio isti broj kao i igrac
-
+			
 			    // Potez igraca
 			    while (igracRez < 21) {
 					Thread.sleep(1000); //1s cekanja
-			        System.out.print("Zelite li da vucete ili stanete? (V/S)");
+			        System.out.print("Zelite li da vucete ili stanete? (V/S)\n");
 			        String input = scanner.nextLine().toLowerCase();
 
 			        if (input.equals("v")) {
-			            String novaKarta = nasumicnaKarta(karta, vrsta);
-			            int vrijednostKarte = nabaviVrijednost(novaKarta);
+			            String novaKarta = Karte.nasumicnaKarta(Karte.broj, Karte.vrsta);
+			            int vrijednostKarte = Karte.nabaviVrijednost(novaKarta, igracRez, ashov1);
 			            igracRez += vrijednostKarte;
 						brojKarata += 1;
+
+						if (igracRez > 21) {
+							Karte.ashovFix(ashov1, x, igracRez);
+						}
 
 			            System.out.println("Izvukli ste " + novaKarta + " (Ukupna vrijednost: " + igracRez + ").");
 
@@ -62,9 +71,13 @@ public class Blekdzek {
 
 					for (int i = 2; i < brojKarata; i++) {
 						Thread.sleep(1500); // Čeka 1.5s kako bi simuliralo pravo vađenje karata
-						String novaKarta = nasumicnaKarta(karta, vrsta);
-						int vrijednostKarte = nabaviVrijednost(novaKarta);
+						String novaKarta = Karte.nasumicnaKarta(Karte.broj, Karte.vrsta);
+						int vrijednostKarte = Karte.nabaviVrijednost(novaKarta, dilerRez, ashov2);
 						dilerRez += vrijednostKarte;
+
+						if (dilerRez > 21) {
+							Karte.ashovFix(ashov2, y, dilerRez);
+						}
 
 						System.out.println("Diler vuce " + novaKarta + " (Ukupna vrijednost: " + dilerRez + ")");
 
@@ -94,24 +107,5 @@ public class Blekdzek {
 			    }
 			}
 		}
-    }
-
-    public static String nasumicnaKarta(String[] karta, String[] vrsta) {
-        Random random = new Random();
-        int kartaIndex = random.nextInt(karta.length);
-        int vrstaIndex = random.nextInt(vrsta.length);
-
-		return karta[kartaIndex] + " " + vrsta[vrstaIndex];
-    }
-    
-    public static int nabaviVrijednost(String karta) {
-		String rank = karta.substring(0, karta.length() - 2); // Uzima kartu bez vrste karte i space-a (zbog toga je -2)
-        if (rank.equals("A")) {
-            return 1;
-        } else if (rank.equals("ZH") || rank.equals("Q") || rank.equals("KR")) {
-            return 10;
-        } else {
-            return Integer.parseInt(rank); // Vraća vrijednost zavisnu od broja karte
-        }
     }
 }

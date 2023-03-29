@@ -8,8 +8,8 @@ public class Blekdzek {
 			Karte Karte = new Karte();
 
 			System.out.println("Grupa 3 - Blekdzek");
-			System.out.println("Asov moze biti vrijedan 1 ili 11; vrijednost asova se ne mijenja nakon izvlacenja.\n A - As, J - Zandar, Q - Kraljica, KR - Kralj.\n P - Pik, T - Tref, H - Herc, K - Karo."); // \n novi red
-            Thread.sleep(2000);
+			System.out.println("Asov moze biti vrijedan 1 ili 11; vrijednost asova se ne mijenja nakon izvlacenja.\nDiler vuce dok ne dobije 17 ili vise.\n A - As, J - Zandar, Q - Kraljica, KR - Kralj.\n P - Pik, T - Tref, H - Herc, K - Karo."); // \n novi red
+            Thread.sleep(3000);
 
 			// Loop igre
 			while (true) {
@@ -31,7 +31,6 @@ public class Blekdzek {
 			    System.out.println("Vase karte: " + igracKarta1 + ", " + igracKarta2 + " (Vrijednost: " + igracRez + ")");
 			    System.out.println("Karta dilera: " + dilerKarta1 + " [?]\n");
 				int pukao = 0; // Određuje je li igrač pukao, bitno za određivanje pobjednika
-				int brojKarata = 2; // Prati broj karata kako bi diler vadio isti broj kao i igrac
 			
 			    // Potez igraca
 			    while (igracRez < 21) {
@@ -43,7 +42,6 @@ public class Blekdzek {
 			            String novaKarta = Karte.nasumicnaKarta(Karte.broj, Karte.vrsta);
 			            int vrijednostKarte = Karte.nabaviVrijednost(novaKarta, igracRez);
 			            igracRez += vrijednostKarte;
-						brojKarata += 1;
 
 			            System.out.println("Izvukli ste " + novaKarta + " (Ukupna vrijednost: " + igracRez + ").");
 
@@ -65,8 +63,8 @@ public class Blekdzek {
 			    // Dilerov špil
 					System.out.println("\nDiler otkriva svoju drugu kartu: " + dilerKarta2 + " (Ukupna vrijednost: " + dilerRez + ")");
 
-					for (int i = 2; i < brojKarata; i++) {
-						Thread.sleep(1500); // Čeka 1.5s kako bi simuliralo pravo vađenje karata
+					while (dilerRez < 17) {
+						Thread.sleep(2000); // Čeka 2s kako bi simuliralo pravo vađenje karata
 						String novaKarta = Karte.nasumicnaKarta(Karte.broj, Karte.vrsta);
 						int vrijednostKarte = Karte.nabaviVrijednost(novaKarta, dilerRez);
 						dilerRez += vrijednostKarte;

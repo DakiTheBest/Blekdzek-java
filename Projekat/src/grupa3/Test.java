@@ -2,7 +2,7 @@ package grupa3;
 
 import java.util.*;
 
-public class Blekdzek {
+public class Test {
 	public static void main(String[] args) throws InterruptedException { // throws dio zbog thread.sleep funkcije u kodu
 	    try (Scanner scanner = new Scanner(System.in)) { // try kako nebi davalo error (nepotrebno)
 			Karte Karte = new Karte();

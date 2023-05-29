@@ -6,10 +6,13 @@ public class Test {
 	public static void main(String[] args) throws InterruptedException { // throws dio zbog thread.sleep funkcije u kodu
 	    try (Scanner scanner = new Scanner(System.in)) { // try kako nebi davalo error (nepotrebno)
 			Karte Karte = new Karte();
+			Rezultat Rezultat = new Rezultat();
 
 			System.out.println("Grupa 3 - Blekdzek");
 			System.out.println("Asov moze biti vrijedan 1 ili 11; vrijednost asova se ne mijenja nakon izvlacenja.\nDiler vuce dok ne dobije 17 ili vise.\n A - As, J - Zandar, Q - Kraljica, KR - Kralj.\n P - Pik, T - Tref, H - Herc, K - Karo."); // \n novi red
             Thread.sleep(3000);
+
+			System.out.println(Rezultat.Score(0));
 
 			// Loop igre
 			while (true) {
@@ -26,6 +29,7 @@ public class Test {
 				int dilerRez1 = Karte.nabaviVrijednost(dilerKarta1, dilerRez0);
 				int igracRez = igracRez1 + Karte.nabaviVrijednost(igracKarta2, igracRez1);
 				int dilerRez = dilerRez1 + Karte.nabaviVrijednost(dilerKarta2, dilerRez1);
+				int pobjednik = 0;
 
 
 			    System.out.println("Vase karte: " + igracKarta1 + ", " + igracKarta2 + " (Vrijednost: " + igracRez + ")");
@@ -81,11 +85,18 @@ public class Test {
 			    // Odluci pobjednika
 			    if (igracRez <= 21 && (dilerRez > 21 || igracRez > dilerRez) && (pukao == 0 || pukao == 2)) {
 			        System.out.println("\nVi pobjedjujete!");
+					pobjednik = 1;
 			    } else if ( dilerRez <= 21 && dilerRez > igracRez || pukao == 1) {
 			        System.out.println("\nKuca pobjedjuje!");
+					pobjednik = 2;
 			    } else {
 					System.out.println("\nNerijeseno!");
+					pobjednik = 0;
 				}
+
+				System.out.println(Rezultat.Score(pobjednik));
+
+
 
 			    // Igraj opet
 			    System.out.print("Zelite li da igrate ponovo? (Unesite \"da\" za novu partiju)");

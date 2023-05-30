@@ -1,7 +1,5 @@
 package grupa3;
 
-import java.util.*;
-
 public class Rezultat extends Test {
     int Rezultat1 = 0;
     int Rezultat2 = 0;

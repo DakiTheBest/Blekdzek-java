@@ -7,11 +7,11 @@ public class Kredit {
 
     public int ulog() {
         Scanner scanner = new Scanner(System.in);
-
+        
         System.out.println("\nKoliko zelite da ulozite? Unesite 0 ako ne zelite da igrate sa kreditima.");
-	    int ulog = scanner.nextInt();
+        int ulog = scanner.nextInt();
 
-        return ulog; 
+        return ulog;
     }
 
     public void procjena(int ulog, int pobjednik) throws InterruptedException {

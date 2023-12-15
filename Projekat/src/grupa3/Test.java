@@ -9,11 +9,6 @@ public class Test {
 			Rezultat Rezultat = new Rezultat();
 			Kredit Kredit = new Kredit();
 
-			System.out.println("Grupa 3 - Blekdzek");
-			System.out.println("Asov moze biti vrijedan 1 ili 11; vrijednost asova se ne mijenja nakon izvlacenja.\nDiler vuce dok ne dobije 17 ili vise.\n A - As, J - Zandar, Q - Kraljica, KR - Kralj.\n P - Pik, T - Tref, H - Herc, K - Karo."); // \n novi red
-			System.out.println("Pocinjete sa 100 kredita, nakon dobijene partije ulozeni kredit se duplira. Pokusajte da dodjete do 1000 :)");
-            Thread.sleep(2000);
-
 			System.out.println("\n"+Rezultat.Score(0));
 			System.out.println("Kredit: "+Kredit.Stanje);
 

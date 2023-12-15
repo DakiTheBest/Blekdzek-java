@@ -70,24 +70,25 @@ public class Kredit {
     }
 
     public int ulog() throws InterruptedException {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("\nKoliko zelite da ulozite? Unesite 'sve' ako zelite da igrate sa svim kreditima, ili 0 ako igrate bez njih.");
-        String unos = scanner.nextLine();
-    
-        if ("sve".equalsIgnoreCase(unos)) {
-            return (int) Stanje; // Uloži sve kredite
-        } else {
-            try {
-                int ulog = Integer.parseInt(unos);
-                if (ulog < 0) {
-                    System.out.println("Unesite pozitivan broj ili \"sve\".");
+        try (Scanner scanner = new Scanner(System.in)) { //try kako scanner greška nebi iskakala
+            System.out.println("\nKoliko zelite da ulozite? Unesite 'sve' ako zelite da igrate sa svim kreditima, ili 0 ako igrate bez njih.");
+            String unos = scanner.nextLine();
+   
+            if ("sve".equalsIgnoreCase(unos)) {
+                return (int) Stanje; // Uloži sve kredite
+            } else {
+                try {
+                    int ulog = Integer.parseInt(unos);
+                    if (ulog < 0) {
+                        System.out.println("Unesite pozitivan broj ili \"sve\".");
+                        return ulog();
+                    }
+                    return ulog;
+                } catch (NumberFormatException e) {
+                    System.out.println("Neispravan unos. Molimo, unesite pozitivan broj ili 'sve'.");
+                    Thread.sleep(1500);
                     return ulog();
                 }
-                return ulog;
-            } catch (NumberFormatException e) {
-                System.out.println("Neispravan unos. Molimo, unesite pozitivan broj ili 'sve'.");
-                Thread.sleep(1500);
-                return ulog();
             }
         }
     }

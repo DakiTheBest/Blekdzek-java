@@ -3,6 +3,7 @@ package grupa3;
 public class Rezultat extends Test {
     int Rezultat1 = 0;
     int Rezultat2 = 0;
+    Kredit Kredit = new Kredit();
 
     public String Score(int pobjednik) {
         if (pobjednik == 1) {
@@ -11,6 +12,6 @@ public class Rezultat extends Test {
             Rezultat2++;
         }
 
-        return ("Vi: "+Rezultat1+" - Kompjuter: "+Rezultat2);
+        return (Kredit.getIme()+": "+Rezultat1+" - Kompjuter: "+Rezultat2);
     }
 }
